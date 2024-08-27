@@ -1,6 +1,6 @@
 ### Project Objective
 
-This is a Pet Adoption Platform project that I am using TypeScript, Express.js and Object Relation Modeling (ORM) Prisma with PostgreSQL.
+<!-- This is a Pet Adoption Platform project that I am using TypeScript, Express.js and Object Relation Modeling (ORM) Prisma with PostgreSQL.
 
 - [x] Project Setup:
   - [x] Create a Node.js Express project.
@@ -48,4 +48,4 @@ npm run dev
 ```
 
 #### Hosting site Link: https://pet-adoption-project.vercel.app/
-# job-finder-backend
+# job-finder-backend -->
