@@ -1,0 +1,79 @@
+//* This is your Prisma schema file,
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id @default(uuid())
+  name          String
+  email         String        @unique
+  password      String
+  role          UserRole
+  profilePhoto  String?
+  contactNumber String
+  address       String
+  gender        Gender?       @default(Unknown)
+  isDeleted     Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  Application   Application[]
+
+  @@map("users")
+}
+
+model Job {
+  id               String        @id @default(uuid())
+  title            String
+  company          String
+  description      String
+  skills           String[]
+  salary String
+  type             String
+  category         String
+  numberOFOpenions Int
+  location         String
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  Application      Application[]
+
+  @@map("jobs")
+}
+
+model Application {
+  id        String @id @default(uuid())
+  user      User   @relation(fields: [userId], references: [id])
+  userId    String
+  job       Job    @relation(fields: [jobId], references: [id])
+  jobId     String
+  resumeUrl String
+  coverLetter String?
+  status          ApplicationStatus  @default(PENDING)
+  notes           String?
+
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@map("applications")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum Gender {
+  Male
+  Female
+  Unknown
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+}
