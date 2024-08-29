@@ -14,13 +14,15 @@ const createJob = z.object({
     description: z.string({
       required_error: "Job description is required!",
     }),
-    skills: z.string({
-      required_error: "Job skills is required!",
-    }),
+    skills: z.array(
+      z.string({
+        required_error: "Each skill must be a string!",
+      })
+    ),
     salary: z.string({
       required_error: "Job salary is required!",
     }),
-    type: z.number({
+    type: z.string({
       required_error: "Job type is required!",
     }),
     category: z.string({
@@ -31,39 +33,59 @@ const createJob = z.object({
     }),
     location: z.string({
       required_error: "Job location is required!",
-    })
+    }),
   }),
 });
 
 const updateJob = z.object({
   body: z.object({
-    title: z.string({
-      required_error: "Job title is required!",
-    }).optional(),
-    company: z.string({
-      required_error: "Job company is required!",
-    }).optional(),
-    description: z.string({
-      required_error: "Job description is required!",
-    }).optional(),
-    skills: z.string({
-      required_error: "Job skills is required!",
-    }).optional(),
-    salary: z.string({
-      required_error: "Job salary is required!",
-    }).optional(),
-    type: z.number({
-      required_error: "Job type is required!",
-    }).optional(),
-    category: z.string({
-      required_error: "Job category is required!",
-    }).optional(),
-    numberOFOpenions: z.number({
-      required_error: "Job number of opinions is required!",
-    }).optional(),
-    location: z.string({
-      required_error: "Job location is required!",
-    }).optional()
+    title: z
+      .string({
+        required_error: "Job title is required!",
+      })
+      .optional(),
+    company: z
+      .string({
+        required_error: "Job company is required!",
+      })
+      .optional(),
+    description: z
+      .string({
+        required_error: "Job description is required!",
+      })
+      .optional(),
+    skills: z
+      .array(
+        z.string({
+          required_error: "Each skill must be a string!",
+        })
+      )
+      .optional(),
+    salary: z
+      .string({
+        required_error: "Job salary is required!",
+      })
+      .optional(),
+    type: z
+      .string({
+        required_error: "Job type is required!",
+      })
+      .optional(),
+    category: z
+      .string({
+        required_error: "Job category is required!",
+      })
+      .optional(),
+    numberOFOpenions: z
+      .number({
+        required_error: "Job number of opinions is required!",
+      })
+      .optional(),
+    location: z
+      .string({
+        required_error: "Job location is required!",
+      })
+      .optional(),
   }),
 });
 

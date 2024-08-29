@@ -92,13 +92,13 @@ const getMyJobsFromDB = async (
 
   const andConditions: Prisma.JobWhereInput[] = [];
 
-  // if (userData?.role) {
-  //   andConditions.push({
-  //     user: {
-  //       id: userData.userId,
-  //     },
-  //   });
-  // }
+  if (userData?.role) {
+    andConditions.push({
+      user: {
+        id: userData.userId,
+      },
+    });
+  }
 
   if (params.searchTerm) {
     andConditions.push({
