@@ -32,13 +32,6 @@ router.patch(
   userController.changeUserRole
 );
 
-// router.patch(
-//   "/:id/status",
-//   auth( UserRole.ADMIN),
-//   validateRequest(userValidation.updateStatus),
-//   userController.changeProfileStatus
-// );
-
 router.put(
   "/profile",
   auth(UserRole.ADMIN, UserRole.USER),

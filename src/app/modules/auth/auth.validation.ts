@@ -1,4 +1,3 @@
-import { UserRole, UserStatus } from "@prisma/client";
 import { z } from "zod";
 
 const loginUser = z.object({
