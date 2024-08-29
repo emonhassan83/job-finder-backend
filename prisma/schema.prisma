@@ -22,42 +22,45 @@ model User {
   isDeleted     Boolean       @default(false)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-  Application   Application[]
+  application   Application[]
+  job           Job[]
 
   @@map("users")
 }
 
 model Job {
   id               String        @id @default(uuid())
+  userId           String
+  user             User          @relation(fields: [userId], references: [id])
   title            String
   company          String
   description      String
   skills           String[]
-  salary String
+  salary           String
   type             String
   category         String
   numberOFOpenions Int
   location         String
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
-  Application      Application[]
+  application      Application[]
 
   @@map("jobs")
 }
 
 model Application {
-  id        String @id @default(uuid())
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String
-  job       Job    @relation(fields: [jobId], references: [id])
-  jobId     String
-  resumeUrl String
+  id          String            @id @default(uuid())
+  user        User              @relation(fields: [userId], references: [id])
+  userId      String
+  job         Job               @relation(fields: [jobId], references: [id])
+  jobId       String
+  resumeUrl   String
   coverLetter String?
-  status          ApplicationStatus  @default(PENDING)
-  notes           String?
+  status      ApplicationStatus @default(PENDING)
+  notes       String?
 
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("applications")
 }

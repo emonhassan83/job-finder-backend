@@ -1,4 +1,4 @@
-import {  Job, Prisma } from "@prisma/client";
+import { Job, Prisma } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { IPaginationOptions, IUser } from "../../interfaces";
@@ -8,7 +8,7 @@ const createJobIntoDB = async (userData: IUser, jobData: any): Promise<Job> => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
-      isDeleted: false
+      isDeleted: false,
     },
   });
 
@@ -62,7 +62,10 @@ const getAllJobsFromDB = async (params: any, options: IPaginationOptions) => {
           }
         : {
             createdAt: "asc",
-          }
+          },
+    include: {
+      user: true,
+    },
   });
 
   const total = await prisma.job.count({
@@ -135,10 +138,9 @@ const getMyJobsFromDB = async (
         : {
             createdAt: "asc",
           },
-    // include: {
-    //   user: true,
-    //   adoptionRequest: true,
-    // },
+    include: {
+      user: true,
+    },
   });
 
   const total = await prisma.job.count({
@@ -159,7 +161,7 @@ const getAIntoDB = async (jobId: string, userData: IUser) => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
-      isDeleted: false
+      isDeleted: false,
     },
   });
 
@@ -173,10 +175,9 @@ const getAIntoDB = async (jobId: string, userData: IUser) => {
     where: {
       id: jobId,
     },
-    // include: {
-    //   user: true,
-    //   adoptionRequest: true,
-    // },
+    include: {
+      user: true
+    },
   });
 
   return result;
@@ -190,10 +191,9 @@ const updateIntoDB = async (
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
-      isDeleted: false
+      isDeleted: false,
     },
   });
-  
 
   await prisma.job.findUniqueOrThrow({
     where: {
@@ -206,9 +206,9 @@ const updateIntoDB = async (
       id: jobId,
     },
     data,
-    // include: {
-    //   user: true,
-    // },
+    include: {
+      user: true,
+    },
   });
 
   return result;
@@ -218,7 +218,7 @@ const deleteIntoDB = async (userData: IUser, jobId: string): Promise<Job> => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
-      isDeleted: false
+      isDeleted: false,
     },
   });
 

@@ -2,6 +2,9 @@ import { z } from "zod";
 
 const createJob = z.object({
   body: z.object({
+    userId: z.string({
+      required_error: "User id is required!",
+    }),
     title: z.string({
       required_error: "Job title is required!",
     }),
