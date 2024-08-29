@@ -1,10 +1,10 @@
-import { Job, Prisma } from "@prisma/client";
+import { Application, Job, Prisma } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { IPaginationOptions, IUser } from "../../interfaces";
-import { jobSearchAbleFields } from "./job.constant";
+import { applicationSearchAbleFields } from "./application.constant";
 
-const createJobIntoDB = async (userData: IUser, jobData: any): Promise<Job> => {
+const createApplicationIntoDB = async (userData: IUser, applicationData: any): Promise<Application> => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
@@ -12,22 +12,22 @@ const createJobIntoDB = async (userData: IUser, jobData: any): Promise<Job> => {
     },
   });
 
-  const result = await prisma.job.create({
-    data: jobData,
+  const result = await prisma.application.create({
+    data: applicationData,
   });
 
   return result;
 };
 
-const getAllJobsFromDB = async (params: any, options: IPaginationOptions) => {
+const getAllApplicationsFromDB = async (params: any, options: IPaginationOptions) => {
   const { page, limit, skip } = paginationHelper.calculatePagination(options);
   const { searchTerm, ...filterData } = params;
 
-  const andConditions: Prisma.JobWhereInput[] = [];
+  const andConditions: Prisma.ApplicationWhereInput[] = [];
 
   if (searchTerm) {
     andConditions.push({
-      OR: jobSearchAbleFields.map((field) => ({
+      OR: applicationSearchAbleFields.map((field) => ({
         [field]: {
           contains: searchTerm,
           mode: "insensitive",
@@ -46,12 +46,12 @@ const getAllJobsFromDB = async (params: any, options: IPaginationOptions) => {
     });
   }
 
-  const whereConditions: Prisma.JobWhereInput =
+  const whereConditions: Prisma.ApplicationWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
   // console.dir(whereConditions, { depth: Infinity });
 
-  const result = await prisma.job.findMany({
+  const result = await prisma.application.findMany({
     where: whereConditions,
     skip,
     take: limit,
@@ -65,10 +65,11 @@ const getAllJobsFromDB = async (params: any, options: IPaginationOptions) => {
           },
     include: {
       user: true,
+      job: true,
     },
   });
 
-  const total = await prisma.job.count({
+  const total = await prisma.application.count({
     where: whereConditions,
   });
 
@@ -82,7 +83,7 @@ const getAllJobsFromDB = async (params: any, options: IPaginationOptions) => {
   };
 };
 
-const getMyJobsFromDB = async (
+const getMyApplicationsFromDB = async (
   params: any,
   options: IPaginationOptions,
   userData: IUser
@@ -90,7 +91,7 @@ const getMyJobsFromDB = async (
   const { page, limit, skip } = paginationHelper.calculatePagination(options);
   const { searchTerm, ...filterData } = params;
 
-  const andConditions: Prisma.JobWhereInput[] = [];
+  const andConditions: Prisma.ApplicationWhereInput[] = [];
 
   if (userData?.role) {
     andConditions.push({
@@ -102,7 +103,7 @@ const getMyJobsFromDB = async (
 
   if (params.searchTerm) {
     andConditions.push({
-      OR: jobSearchAbleFields.map((field) => ({
+      OR: applicationSearchAbleFields.map((field) => ({
         [field]: {
           contains: params.searchTerm,
           mode: "insensitive",
@@ -121,12 +122,12 @@ const getMyJobsFromDB = async (
     });
   }
 
-  const whereConditions: Prisma.JobWhereInput =
+  const whereConditions: Prisma.ApplicationWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
   // console.dir(whereConditions, {depth: Infinity});
 
-  const result = await prisma.job.findMany({
+  const result = await prisma.application.findMany({
     where: whereConditions,
     skip,
     take: limit,
@@ -140,10 +141,11 @@ const getMyJobsFromDB = async (
           },
     include: {
       user: true,
+      job: true,
     },
   });
 
-  const total = await prisma.job.count({
+  const total = await prisma.application.count({
     where: whereConditions,
   });
 
@@ -157,7 +159,7 @@ const getMyJobsFromDB = async (
   };
 };
 
-const getAIntoDB = async (jobId: string, userData: IUser) => {
+const getAIntoDB = async (applicationId: string, userData: IUser) => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
@@ -165,18 +167,19 @@ const getAIntoDB = async (jobId: string, userData: IUser) => {
     },
   });
 
-  await prisma.job.findUniqueOrThrow({
+  await prisma.application.findUniqueOrThrow({
     where: {
-      id: jobId,
+      id: applicationId,
     },
   });
 
-  const result = await prisma.job.findUnique({
+  const result = await prisma.application.findUnique({
     where: {
-      id: jobId,
+      id: applicationId,
     },
     include: {
       user: true,
+      job: true,
     },
   });
 
@@ -185,9 +188,9 @@ const getAIntoDB = async (jobId: string, userData: IUser) => {
 
 const updateIntoDB = async (
   userData: IUser,
-  jobId: string,
-  data: Partial<Job>
-): Promise<Job> => {
+  applicationId: string,
+  data: Partial<Application>
+): Promise<Application> => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
@@ -195,15 +198,15 @@ const updateIntoDB = async (
     },
   });
 
-  await prisma.job.findUniqueOrThrow({
+  await prisma.application.findUniqueOrThrow({
     where: {
-      id: jobId,
+      id: applicationId,
     },
   });
 
-  const result = await prisma.job.update({
+  const result = await prisma.application.update({
     where: {
-      id: jobId,
+      id: applicationId,
     },
     data,
     include: {
@@ -214,7 +217,7 @@ const updateIntoDB = async (
   return result;
 };
 
-const deleteIntoDB = async (userData: IUser, jobId: string): Promise<Job> => {
+const deleteIntoDB = async (userData: IUser, applicationId: string): Promise<Application> => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: userData?.userId,
@@ -222,34 +225,26 @@ const deleteIntoDB = async (userData: IUser, jobId: string): Promise<Job> => {
     },
   });
 
-  await prisma.job.findUniqueOrThrow({
+  await prisma.application.findUniqueOrThrow({
     where: {
-      id: jobId,
+      id: applicationId,
     },
   });
 
   return await prisma.$transaction(async (transactionClient) => {
-    const deleteJob = await transactionClient.job.delete({
+    const deleteApplication = await transactionClient.application.delete({
       where: {
-        id: jobId,
+        id: applicationId,
       },
     });
-
-    //* delete job applications
-    await transactionClient.application.deleteMany({
-      where: {
-        jobId: jobId,
-      },
-    });
-    
-    return deleteJob;
+    return deleteApplication;
   });
 };
 
-export const JobService = {
-  createJobIntoDB,
-  getAllJobsFromDB,
-  getMyJobsFromDB,
+export const ApplicationService = {
+  createApplicationIntoDB,
+  getAllApplicationsFromDB,
+  getMyApplicationsFromDB,
   getAIntoDB,
   updateIntoDB,
   deleteIntoDB,
