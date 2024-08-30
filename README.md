@@ -1,6 +1,6 @@
 ### Project Objective
 
-<!-- This is a Pet Adoption Platform project that I am using TypeScript, Express.js and Object Relation Modeling (ORM) Prisma with PostgreSQL.
+This project is a job search platform, built using TypeScript, Express.js, and Object-Relational Mapping (ORM) Prisma with PostgreSQL.
 
 - [x] Project Setup:
   - [x] Create a Node.js Express project.
@@ -8,7 +8,7 @@
 - [x] Database Integration:
   - [x] Set up Prisma with PostgreSQL.
 - [x] Data Models:
-  - [x] Define Prisma Schema table for User, Pet, buyerManagement, Adoption Request.
+  - [x] Define Prisma schema tables for User, Job, and Application.
   - [x] Implement data types and validations based on the provided structure.
   - [x] Implement user authentication, authorization, and user-related information.
 - [x] Validation:
@@ -21,25 +21,36 @@
 ### Project Features
 
 - [x] Auth/User Management:
+
   - [x] User Registration or Create a User
   - [x] Login a User
   - [x] Retrieve all users
 
-- [x] User can
-  - [x] Add a Pet
-  - [x] Get Paginated and Filtered all Pets
-  - [x] Update Pet profile
-  - [x] Submit Adoption Request
-  - [x] Get Adoption Requests
-  - [x] Update Adoption Request Status
-  - [x] Get User Information
-  - [x] Update User Information
+- [x] Job Management:
+  - [x] Admin can add a job.
+  - [x] Get paginated and filtered job listings.
+  - [x] Update job details.
+
+- [x] Application Management:
+  - [x] Submit a job application.
+  - [x] Retrieve and filter job applications.
+  - [x] Update the status of a job application.
 
 ### Getting Started
 
 #### Setup
 
-1. Clone the repo
+1. Clone the repo:
+
+```bash
+https://github.com/emonhassan83/job-finder-backend
+```
+
+2. Go to project directory:
+
+```bash
+cd job-finder-backend
+```
 
 2. Run the development server:
 
@@ -47,5 +58,4 @@
 npm run dev
 ```
 
-#### Hosting site Link: https://pet-adoption-project.vercel.app/
-# job-finder-backend -->
+#### Hosting api Link: https://job-finder-backend-coral.vercel.app/

@@ -12,6 +12,12 @@ const createJobIntoDB = async (userData: IUser, jobData: any): Promise<Job> => {
     },
   });
 
+  await prisma.job.findUniqueOrThrow({
+    where: {
+      id: jobData?.jobId,
+    },
+  });
+
   const result = await prisma.job.create({
     data: jobData,
   });

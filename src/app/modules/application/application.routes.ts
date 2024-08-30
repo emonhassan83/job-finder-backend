@@ -14,7 +14,7 @@ router.post(
   applicationController.createApplication
 );
 
-router.get("/", auth(UserRole.ADMIN, UserRole.USER), applicationController.getAllApplications);
+router.get("/", auth(UserRole.ADMIN), applicationController.getAllApplications);
 
 router.get(
   "/my-applications",
@@ -37,7 +37,7 @@ router.put(
 
 router.delete(
   "/:applicationId",
-  auth(UserRole.ADMIN,  UserRole.USER),
+  auth(UserRole.ADMIN, UserRole.USER),
   applicationController.deleteAApplication
 );
 
