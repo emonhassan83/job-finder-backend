@@ -1,11 +1,16 @@
-export const jobSearchAbleFields: string[] = ['title', 'company', 'skills', 'category', 'location'] //* only for search term
+export const jobSearchAbleFields: string[] = [
+  "title",
+  "category",
+  "location",
+  "type",
+]; //* only for search term
 
 export const jobFilterableFields: string[] = [
   "company",
-  "category",
-  "type",
+  "skills",
   "category",
   "location",
+  "type",
   "salary",
   "searchTerm",
 ]; //* for all filtering

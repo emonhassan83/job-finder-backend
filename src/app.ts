@@ -6,8 +6,8 @@ import cookieParser from "cookie-parser";
 import notFound from "./app/middlewares/notFound";
 
 const app: Application = express();
-// const url = ""
-const url = "http://localhost:3000"
+const url = "https://aquamarine-platypus-c2123a.netlify.app"
+// const url = "http://localhost:5173"
 
 //* Middleware
 app.use(cors({origin: url, credentials: true}));
